@@ -8,10 +8,16 @@ Antes de comenzar, hay que tener instalado lo siguiente:
 Docker - Plataforma de contenedores
 Git - Poseer una cuenta para guardar el repo de forma local
 Configuración del entorno: 
-Clona este repositorio en tu máquina local: git clone https://github.com/aguneirotti/TP-Entornos
+Clona este repositorio en tu máquina local: 
+
+git clone https://github.com/aguneirotti/TP-Entornos
+
 Nos movemos al repo local:
+
 cd TP-Entornos
-Uso del programa
+
+Uso del programa:
+
 El programa se ejecutará dentro de un contenedor Docker. A continuación, se describen los pasos para construir la imagen y ejecutar el contenedor.
 
 Construir la imagen Docker:
@@ -31,4 +37,6 @@ Descomprimir imágenes.
 Procesar imágenes.
 Comprimir imágenes.
 Selecciona una opción ingresando el número correspondiente y sigue las instrucciones que se te presenten en cada caso.
+
+AUTORES: Agustin Neirotti, Yamil Elias
 
