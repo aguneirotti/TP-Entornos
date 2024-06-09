@@ -1,42 +1,41 @@
-# TP-Entornos
-Trabajo Práctico Final - Procesamiento de imágenes
-Este es el trabajo práctico final, en el cual se debe diseñar y escribir un programa para procesar imágenes. El programa consta de varias partes principales: generación y descarga de imágenes, descomprension de imagenes, transformación del tamaño de las imagenes y generación de dos archivos de texto, uno con el nombre de todas las personas generadas, y otro con el nombre de las personas que termina con la letra "a" , y por ultimo un archivo comprimido con todo.
+#TP-Environments
+Final Practical Work - Image Processing
+This is the final practical work, in which a program to process images must be designed and written. The program consists of several main parts: generation and download of images, decompression of images, transformation of the size of the images and generation of two text files, one with the name of all the generated people, and another with the name of the people that ends with the letter "a", and finally a compressed file with everything.
 
-Requisitos previos
-Antes de comenzar, hay que tener instalado lo siguiente:
+Previous requirements
+Before starting, you must have the following installed:
 
-Docker - Plataforma de contenedores
-Git - Poseer una cuenta para guardar el repo de forma local
-Configuración del entorno: 
-Clona este repositorio en tu máquina local: 
+Docker - Container Platform
+Git - Have an account to save the repo locally
+Environment configuration:
+Clone this repository to your local machine:
 
 git clone https://github.com/aguneirotti/TP-Entornos
 
-Nos movemos al repo local:
+We move to the local repo:
 
-cd TP-Entornos
+cd TP-Environments
 
-Uso del programa:
+Program usage:
 
-El programa se ejecutará dentro de un contenedor Docker. A continuación, se describen los pasos para construir la imagen y ejecutar el contenedor.
+The program will run inside a Docker container. Below are the steps to build the image and run the container.
 
-Construir la imagen Docker:
+Build the Docker image:
 
-sudo docker build -t contenedor_tp .
+sudo docker build -t tp_container .
 
-Ejecutar el contenedor:
+Run the container:
 
-sudo docker run -it --rm contenedor_tp
-Esto iniciará el programa y mostrara el menú principal para seleccionar las opciones.
+sudo docker run -it --rm tp_container
+This will start the program and display the main menu to select options.
 
-Menú principal
-Dentro del contenedor, se presenta un menú que te permite seleccionar las diferentes opciones del programa. A continuación, se detallan las opciones disponibles:
+Main menu
+Inside the container, a menu is presented that allows you to select the different program options. Below are the available options:
 
-Generar y descargar imágenes.
-Descomprimir imágenes.
-Procesar imágenes.
-Comprimir imágenes.
-Selecciona una opción ingresando el número correspondiente y sigue las instrucciones que se te presenten en cada caso.
+Generate and download images.
+Unzip images.
+Process images.
+Compress images.
+Select an option by entering the corresponding number and follow the instructions presented to you in each case.
 
-AUTORES: Agustin Neirotti, Yamil Elias
-
+AUTHOR: Agustin Neirotti
