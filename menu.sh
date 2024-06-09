@@ -1,60 +1,58 @@
 #!/bin/bash
-echo "Trabajo practico final"
+echo "Final project"
 echo "------------------------------------------------------"
 
 chmod +x generar.sh menu.sh comprimir.sh descomprimir.sh procesar.sh
 
-#Definimos las opciones que da el programa como una lista compuesta por strings
-opciones=("Generar imagen" "Descomprimir" "Procesar imagen" "Comprimir" "Salir")
+# Define the options given by the program as a list of strings
+options=("Generate image" "Decompress" "Process image" "Compress" "Exit")
 
-
-while [ "$salir" = false ]; do
+while [ "$exit_program" = false ]; do
     menu
 done
 
-salir=false
+exit_program=false
 
 function menu {
-    echo "Selecciona una opcion:"
-    for ((i=0; i<${#opciones[@]}; i++)); do
-        echo "$((i+1)). ${opciones[$i]}"
+    echo "Select an option:"
+    for ((i=0; i<${#options[@]}; i++)); do
+        echo "$((i+1)). ${options[$i]}"
     done
-    read opcion
-    case $opcion in 
+    read option
+    case $option in 
         1)
-            echo "Has seleccionado generar imagen"
+            echo "You have selected to generate image"
             sleep 1
             source generar.sh
             ;;
         2) 
-            echo "Has selecciondo la opcion descomprimir"  
+            echo "You have selected the decompress option"  
             sleep 1
             source descomprimir.sh
             cd ..
             ;;  
         3)
-            echo "Has seleccionado procesar imagenes"
+            echo "You have selected to process images"
             sleep 1
             source procesar.sh
             ;;
         4)
-            echo "Has seleccionado comprimir"
+            echo "You have selected to compress"
             sleep 1
             cd ..
             source comprimir.sh
             ;;
         5)
-            echo "Saliendo del programa..."
+            echo "Exiting the program..."
             sleep 2
             exit 0
             ;;
         *)
-            echo "Opcion invalida"
+            echo "Invalid option"
             ;;
     esac
-    
 }
 
-while [ "$salir" = false ]; do
+while [ "$exit_program" = false ]; do
     menu
 done
