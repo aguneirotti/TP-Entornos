@@ -1,38 +1,37 @@
 #!/bin/bash
-# Obtener el directorio actual del script
-direccion_sript=$(dirname "$(readlink -f "$0")")
-cd "$direccion_sript/imagenes"
+# Get the current directory of the script
+script_dir=$(dirname "$(readlink -f "$0")")
+cd "$script_dir/imagenes"
 
-# Verificar si los archivos existen
+# Check if the files exist
 if [ ! -f "imagenes.zip" ]; then
-    echo "El archivo de imágenes comprimidas (imagenes.zip) no existe."
+    echo "The compressed images file (imagenes.zip) does not exist."
     exit 1
 fi
 
 if [ ! -f "checksum.txt" ]; then
-    echo "El archivo de suma de verificación (checksum.txt) no existe."
+    echo "The checksum file (checksum.txt) does not exist."
     exit 1
 fi
 
-# Descomprimimos las imagenes
-echo "Descomprimiendo las imagenes..."
+# Unzip the images
+echo "Unzipping the images..."
 sleep 1
-unzip "imagenes.zip" 
+unzip "imagenes.zip"
 
 if [ $? -ne 0 ]; then
-    echo "Ocurrió un error al descomprimir las imagenes"
+    echo "An error occurred while unzipping the images."
     exit 1
 fi
 
-# Verificamos la suma de verificacion
-echo "Verificando la suma de verificacion..."
+# Verify the checksum
+echo "Verifying the checksum..."
 md5sum -c "checksum.txt"
 
 if [ $? -ne 0 ]; then
-    echo "La suma de verificación no coincide. Los archivos pueden estar corruptos."
+    echo "The checksum does not match. The files may be corrupted."
     exit 1
 fi
 sleep 1
 
-echo "Las imagenes han sido descomprimidas exitosamente!"
-
+echo "The images have been successfully unzipped!"
