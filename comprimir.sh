@@ -1,45 +1,45 @@
 #!/bin/bash
-#Primero nos movemos a la carpeta imagenes
-direccion_script=$(dirname "$(readlink -f "$0")")
-cd "$direccion_script/imagenes"
+# First, navigate to the images folder
+script_dir=$(dirname "$(readlink -f "$0")")
+cd "$script_dir/imagenes"
 
-# Verificamos si efectivamente hay imagenes en la carpeta
+# Verify if there are indeed images in the folder
 if [ ! -d "imagenes" ]; then
-    echo "La carpeta imagenes no contiene imagenes o no existe"
+    echo "The images folder does not contain images or does not exist"
     exit 1
 fi
 
-# Creamos un archivo para guardar la lista de nombres
-lista_nombres="lista_nombres.txt"
+# Create a file to save the list of image names
+name_list="name_list.txt"
 
-# Generamos la lista de nombres de las imagenes
-echo "Generando la lista de nombres..."
-find . -name "*.jpg" -exec basename {} \; > "$lista_nombres"
+# Generate the list of image names
+echo "Generating the list of image names..."
+find . -name "*.jpg" -exec basename {} \; > "$name_list"
 sleep 1
-echo "La lista de nombres a sido generada exitosamente!"
+echo "The list of names has been successfully generated!"
 
+# Create another file to save the list of valid names
+valid_name_list="valid_name_list.txt"
 
-# Creamos otro archivo para guardar la lista de nombres validos
-lista_nombres_validos="lista_nombres_validos.txt"
-
-# Generamos la lista de nombres de imagenes validas
-echo "Generando la lista de nombres de imagenes validas..."
-find . -type f -name "*.jpg" -exec basename {} \; | grep "^[[:upper:]]" > "$lista_nombres_validos"
+# Generate the list of valid image names
+echo "Generating the list of valid image names..."
+find . -type f -name "*.jpg" -exec basename {} \; | grep "^[[:upper:]]" > "$valid_name_list"
 sleep 2
-echo "La lista de nombres validos a sido generada exitosamente!"
+echo "The list of valid names has been successfully generated!"
 
-# Creamos un nuevo archivo para guardar todas las personas cuyo nombre finaliza con la letra "a"
-archivo_nuevo="nombres_con_a.txt"
+# Create a new file to save all names ending with the letter "a"
+names_with_a_file="names_with_a.txt"
 
-# Obtener el total de personas cuyo nombre finaliza con "a"
-echo "Calculando el total de personas cuyo nombre finaliza con 'a'..."
-find . -type f -name "*.jpg" -exec basename {} \; | grep "a.jpg" | wc -l > "$archivo_nuevo"
+# Get the total number of names ending with "a"
+echo "Calculating the total number of names ending with 'a'..."
+find . -type f -name "*.jpg" -exec basename {} \; | grep "a.jpg" | wc -l > "$names_with_a_file"
 sleep 2
-echo "La nueva lista a sido generada exitosamente!"
-#Comprimimos todo lo generado en un unico .zip
-cd $direccion_script
-#zip -r todo.zip . -i imagenes/*
-find imagenes -name "*.jpg" | zip -@ todo.zip
-chmod 777 todo.zip
+echo "The new list has been successfully generated!"
+
+# Compress everything generated into a single .zip file
+cd $script_dir
+#zip -r all.zip . -i imagenes/*
+find imagenes -name "*.jpg" | zip -@ all.zip
+chmod 777 all.zip
 sleep 1
-echo "Todo a sido comprimido exitosamente!"
+echo "Everything has been successfully compressed!"
