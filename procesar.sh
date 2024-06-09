@@ -1,25 +1,24 @@
 #!/bin/bash
 
-#Primeros nos movemos a la carpeta imagenes
-direccion_sript=$(dirname "$(readlink -f "$0")")
-cd "$direccion_sript/imagenes"
+# First, navigate to the images folder
+script_dir=$(dirname "$(readlink -f "$0")")
+cd "$script_dir/imagenes"
 
-# Verificamos que existan las imagenes en la carpeta actual
+# Verify that images exist in the current folder
 if [ ! -d "imagenes" ]; then
-    echo "La carpeta no existe o esta vacia"
+    echo "The folder does not exist or is empty"
     exit 1
 fi
 
-# Crear una carpeta para almacenar las nuevas imagenes
-
+# Create a folder to store the new images
 mkdir -p "imagenes_512x512"
 
-# Recortamos las imagenes a 512x512 usando ImageMagick
-echo "Modificando el tamaño de las imagenes..."
-sleep 1 #Solo para hacer la ejecucion mas amigable
-for imagen in imagenes/*.jpg; do
-    nombre_archivo=$(basename "$imagen")
-    convert "$imagen" -resize 512x512^ -gravity center -extent 512x512 "imagenes_512x512/$nombre_archivo"
+# Resize the images to 512x512 using ImageMagick
+echo "Resizing the images..."
+sleep 1 # Just to make the execution more user-friendly
+for image in imagenes/*.jpg; do
+    filename=$(basename "$image")
+    convert "$image" -resize 512x512^ -gravity center -extent 512x512 "imagenes_512x512/$filename"
 done
 
-echo "El tamaño de las imagenes a sido modificado exitosamente!"
+echo "The image sizes have been successfully modified!"
