@@ -1,81 +1,77 @@
 #!/bin/bash
 
-# Primero vamos a adaptar el archivo csv crudo 
+# First, adapt the raw CSV file
 
-# Generamos un archivo csv sin los números
+# Generate a CSV file without the numbers
 sed 's/,[0-9]*$//' nombres_crudo.csv > nombres_sin_numeros.csv
 chmod 777 nombres_sin_numeros.csv
 
-# Generamos un archivo csv con una palabra por línea
+# Generate a CSV file with one word per line
 sed 's/ /\n/g' nombres_sin_numeros.csv > nombres.csv
 chmod 777 nombres.csv
 
-# Eliminamos el archivo csv auxiliar
+# Delete the auxiliary CSV file
 rm nombres_sin_numeros.csv
 
-
-#Le solicitamos al usuario que ingrese la cantidad de imagenes que desea generar
+# Ask the user to enter the number of images to generate
 if [ $# -eq 0 ]; then
-    echo "Ingresa la cantidad de imagenes que deseas generar: "
+    echo "Enter the number of images you want to generate: "
     read numero_imagenes
     if ! [[ "$numero_imagenes" =~ ^[1-9]+$ ]]; then
-        echo "No ingresaste una opción válida."
+        echo "You did not enter a valid option."
         exit 1
     fi
 else 
-    echo "No ingresaste una opción válida."
+    echo "You did not enter a valid option."
     exit 1
 fi
 
-NOMBRE_ALEATORIO=""   #Generamos una variable global para usar con la funcion generar_nombres
+NOMBRE_ALEATORIO=""  # Generate a global variable to use with the generate_names function
 
-# Funcion para generar nombres al azar
-
+# Function to generate random names
 function generar_nombres {
-    nombres=($(cat nombres.csv))  # Lista de nombres de personas    
-    indice_aleatorio=$(( RANDOM ))  # Generamos un indice aleatorio
+    nombres=($(cat nombres.csv))  # List of names    
+    indice_aleatorio=$(( RANDOM ))  # Generate a random index
     echo "${nombres[$indice_aleatorio]}"
-    NOMBRE_ALEATORIO="${nombres[$indice_aleatorio]}" #Guardamos el nombre aleatorio en la variable  
+    NOMBRE_ALEATORIO="${nombres[$indice_aleatorio]}"  # Save the random name in the variable  
 }
 
+# Get the current directory of the script
+script_dir=$(dirname "$(readlink -f "$0")")
 
-# Obtener el directorio actual del script
-direccion_sript=$(dirname "$(readlink -f "$0")")
+# Create a directory to store the downloaded images
+mkdir -p "$script_dir/imagenes"
+# Copy the CSV file as an auxiliary to the folder where the images will be saved
+cp "$script_dir/nombres.csv" "$script_dir/imagenes/"
 
-# Crear un directorio para almacenar las imágenes descargadas
-mkdir -p "$direccion_sript/imagenes"
-# Copiamos el archivo csv de forma auxiliar a la carpeta donde se guardaran las imagenes
-cp "$direccion_sript/nombres.csv" "$direccion_sript/imagenes/"
+# Navigate to the images folder to iterate
+cd "$script_dir/imagenes" || exit 1
 
-# Nos movemos a la carpeta imagenes para luego iterar
-cd "$direccion_sript/imagenes" || exit 1
-
-
-# Iteramos llamando a la funcion y guardamos en el directorio imagenes
+# Iterate calling the function and save in the images directory
 for ((i=1; i<=numero_imagenes; i++)); do
     generar_nombres
-    archivo="${NOMBRE_ALEATORIO}.jpg" # Generar nombre de archivo al azar
+    archivo="${NOMBRE_ALEATORIO}.jpg"  # Generate random file name
     curl -o "$archivo" "https://thispersondoesnotexist.com/"
-    sleep 1  # Esperar 1 segundo antes de descargar la siguiente imagen
+    sleep 1  # Wait 1 second before downloading the next image
 done
 
-#Removemos el csv auxiliar nombres por una cuestion de prolijidad
+# Remove the auxiliary CSV file for neatness
 rm nombres.csv
 
-# Volver al directorio del script
-cd "$direccion_sript"
+# Return to the script directory
+cd "$script_dir"
 
-# Comprimir las imagenes en un archivo zip
+# Compress the images into a zip file
 zip -r imagenes.zip . -i imagenes/*.jpg
 
-# Generar el archivo de suma de verificacion
+# Generate the checksum file
 md5sum "imagenes.zip" > "checksum.txt"
 
-#Movemos los archivos .zip y .txt a la carpeta imagenes por una cuestion de prolijidad
+# Move the .zip and .txt files to the images folder for neatness
 mv imagenes.zip imagenes/
 mv checksum.txt imagenes/
 
-#Removemos las imagenes generadas de la carpeta con el obejtivo de presentar solamente los archivos .zip y .txt
+# Remove the generated images from the folder to present only the .zip and .txt files
 rm -f imagenes/*.jpg
 
-echo "Las imagenes se han generado exitosamente!"
+echo "The images have been successfully generated!"
